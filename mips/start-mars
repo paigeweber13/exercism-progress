@@ -1,0 +1,2 @@
+#!/bin/bash
+java -jar ~/Documents/code/exercism/mips/Mars4_5.jar

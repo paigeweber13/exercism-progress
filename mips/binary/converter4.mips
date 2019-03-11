@@ -1,0 +1,22 @@
+.data
+
+.text
+binary_convert:
+	li	$t0,0		# start counter
+	li	$v0,0		# initialize result
+	li	$t3,2		# for multiplication
+loop:
+	add	$t1,$a0,$t0	# $t1 has address of next character
+	lb	$t2,($t1)	# $t2 has next character
+	beq	$t2,'\0',end
+	mult	$v0,$t3
+	mflo	$v0
+	bne	$t2,'1',case_char_is_zero
+	addi	$v0,$v0,1
+	# if it's one, add one. Then jump back to beginning
+case_char_is_zero:
+	addi	$t0,$t0,1	# increment counter
+	j	loop
+end:
+	jr	$ra
+	

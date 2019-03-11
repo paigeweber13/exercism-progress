@@ -1,0 +1,13 @@
+.data
+ins:  .asciiz "0", "1", "10", "11", "100", "1001", "11010", "10001101000", "000011111"
+
+.text
+	li	$t0, 0		# start counter
+loop:
+	lb	$a0,ins($t0)	# load next character to print
+	li	$v0,11		# 11 is print character
+	syscall
+	addi	$t0,$t0,1	# increment counter
+	beq	$a0, '\0', end
+	bne	$t0, 10, loop	# only do this 10 times
+end:

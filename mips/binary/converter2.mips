@@ -1,0 +1,20 @@
+.data
+.text
+
+reverse_string:
+	li	$t0, 0		#$t0 is the counter for our loop
+	move	$t9, $sp	#$t9 where we stop
+reverse_string_loop_start:
+	add	$t2, $a0, $t0	#$t2 is the address of the next characte
+	lb	$t6,($t2)	#$t6 is the next character.
+	sb	$t6,($sp)
+	subi	$sp,$sp,1
+	beq	$t6,'\0',reverse_string_end
+	addi	$t0, $t0, 1
+	j	reverse_string_loop_start
+reverse_string_end:
+	
+	
+binary_convert:
+	move	$v0, $sp
+	jr	$ra
