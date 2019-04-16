@@ -4,12 +4,11 @@ use unicode_segmentation::UnicodeSegmentation;
 
 pub fn reverse(input: &str) -> String {
     // graphemes are user-perceived characters
-    let reversed: String = input
+    input
         // get grapheme iterator from strings
         .graphemes(true)
         // reverse the iterator
         .rev()
         // collect back into a string
-        .collect();
-    reversed
+        .collect()
 }
