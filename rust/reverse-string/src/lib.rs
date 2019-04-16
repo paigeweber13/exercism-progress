@@ -11,5 +11,5 @@ pub fn reverse(input: &str) -> String {
         .rev()
         // collect back into a string
         .collect();
-    return reversed;
+    reversed
 }
