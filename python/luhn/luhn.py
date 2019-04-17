@@ -7,6 +7,7 @@ class Luhn(object):
                 self.card_num.append(int(char))
             except ValueError as e:
                 print('only allowed input it numbers and spaces!')
+                print(e)
                 self.card_num = []
                 return
 
