@@ -1,4 +1,11 @@
-class Clock(object):
+"""
+contains only the class object
+"""
+
+class Clock():
+    """
+    represents a time without a date
+    """
     def __init__(self, hour, minute):
         self.hour = hour
         self.minute = minute
@@ -9,10 +16,8 @@ class Clock(object):
         return str(self.hour).zfill(2) + ':' + str(self.minute).zfill(2)
 
     def __eq__(self, other):
-        if self.hour == other.hour and self.minute == other.minute:
-            return True
-        else:
-            return False
+        return bool(self.hour == other.hour
+                    and self.minute == other.minute)
 
     def __add__(self, minutes):
         self.minute += minutes
@@ -24,18 +29,18 @@ class Clock(object):
         self.fix_time()
         return self
 
-    """
-    checks if self is a valid time and fixes it in place if not
-    """
-    def fix_time(self): 
-        while(self.minute >= 60):
+    def fix_time(self):
+        """
+        checks if self is a valid time and fixes it in place if not
+        """
+        while self.minute >= 60:
             self.minute -= 60
             self.hour += 1
-        while(self.hour >= 24):
+        while self.hour >= 24:
             self.hour -= 24
 
-        while(self.minute < 0):
+        while self.minute < 0:
             self.minute += 60
             self.hour -= 1
-        while(self.hour < 0):
+        while self.hour < 0:
             self.hour += 24
