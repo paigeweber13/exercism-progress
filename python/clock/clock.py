@@ -1,5 +1,5 @@
 """
-contains only the class object
+contains only the clock object
 """
 
 class Clock():
