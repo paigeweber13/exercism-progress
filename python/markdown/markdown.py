@@ -1,70 +1,74 @@
 import re
 
+def check_for_headings(line):
+    # checks for headings
+    result = line
+    match = re.match('(?P<num_hash>#+)', line)
+    if match:
+        heading_level = len(match.group('num_hash'))
+        result = '<h' + str(heading_level) + '>' + line[heading_level + 1:] \
+            + '</h' + str(heading_level) + '>'
+    return result
+
+def check_for_bold(line):
+    result = line
+    match = re.match('(.*)__(.*)__(.*)', line)
+    if match:
+        result = match.group(1) + '<strong>' + \
+            match.group(2) + '</strong>' + match.group(3)
+    return result
+
+def check_for_italics(line):
+    result = line
+    match = re.match('(.*)_(.*)_(.*)', line)
+    if match:
+        result = match.group(1) + '<em>' + match.group(2) + \
+            '</em>' + match.group(3)
+    return result
+    # line = '<ul><li>' + curr + '</li>'
+
+def start_list(line):
+    return '<ul>' + line
+
+def add_list_item(list_item):
+    return '<li>' + list_item + '</li>'
+
+def end_list(line):
+    return line + '</ul>'
+
+def add_p_tag(line):
+    return '<p>' + line + '</p>'
 
 def parse_markdown(markdown):
-    lines = markdown.split('\n')
-    res = ''
+    result = ''
     in_list = False
 
     # loop
-    for line in lines:
-        # checks for headings
-        match = re.match('(?P<num_hash>#+)', line)
-        if match is not None:
-            heading_level = len(match.group('num_hash'))
-            line = '<h' + str(heading_level) + '>' + line[heading_level + 1:] \
-                + '</h' + str(heading_level) + '>'
+    for line in markdown.split('\n'):
+        line = check_for_bold(line)
+        line = check_for_italics(line)
+        line = check_for_headings(line)
 
         m = re.match(r'\* (.*)', line)
         if m:
+            line = m.group(1)
             if not in_list:
+                line = add_list_item(line)
+                line = start_list(line)
                 in_list = True
-                is_bold = False
-                is_italic = False
-                curr = m.group(1)
-                m1 = re.match('(.*)__(.*)__(.*)', curr)
-                if m1:
-                    curr = m1.group(1) + '<strong>' + \
-                        m1.group(2) + '</strong>' + m1.group(3)
-                    is_bold = True
-                m1 = re.match('(.*)_(.*)_(.*)', curr)
-                if m1:
-                    curr = m1.group(1) + '<em>' + m1.group(2) + \
-                        '</em>' + m1.group(3)
-                    is_italic = True
-                line = '<ul><li>' + curr + '</li>'
             else:
-                is_bold = False
-                is_italic = False
-                curr = m.group(1)
-                m1 = re.match('(.*)__(.*)__(.*)', curr)
-                if m1:
-                    is_bold = True
-                m1 = re.match('(.*)_(.*)_(.*)', curr)
-                if m1:
-                    is_italic = True
-                if is_bold:
-                    curr = m1.group(1) + '<strong>' + \
-                        m1.group(2) + '</strong>' + m1.group(3)
-                if is_italic:
-                    curr = m1.group(1) + '<em>' + m1.group(2) + \
-                        '</em>' + m1.group(3)
-                line = '<li>' + curr + '</li>'
+                line = add_list_item(line)
+
         else:
             if in_list:
-                line = '</ul>+i'
+                line = end_list(line)
                 in_list = False
 
-        m = re.match('<h|<ul|<p|<li', line)
-        if not m:
-            line = '<p>' + line + '</p>'
-        m = re.match('(.*)__(.*)__(.*)', line)
-        if m:
-            line = m.group(1) + '<strong>' + m.group(2) + '</strong>' + m.group(3)
-        m = re.match('(.*)_(.*)_(.*)', line)
-        if m:
-            line = m.group(1) + '<em>' + m.group(2) + '</em>' + m.group(3)
-        res += line
+        m = re.match(r'<h|<ul|<li', line)
+        if m is None:
+            line = add_p_tag(line)
+        result += line
+
     if in_list:
-        res += '</ul>'
-    return res
+        result = end_list(result)
+    return result
