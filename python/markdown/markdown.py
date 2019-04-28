@@ -1,7 +1,6 @@
 import re
 
 def check_for_headings(line):
-    # checks for headings
     result = line
     match = re.match('(?P<num_hash>#+)', line)
     if match:
