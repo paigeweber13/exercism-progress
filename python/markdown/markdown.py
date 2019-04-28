@@ -24,7 +24,6 @@ def check_for_italics(line):
         result = match.group(1) + '<em>' + match.group(2) + \
             '</em>' + match.group(3)
     return result
-    # line = '<ul><li>' + curr + '</li>'
 
 def start_list(line):
     return '<ul>' + line
