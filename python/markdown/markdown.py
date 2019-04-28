@@ -41,7 +41,6 @@ def parse_markdown(markdown):
     result = ''
     in_list = False
 
-    # loop
     for line in markdown.split('\n'):
         line = check_for_bold(line)
         line = check_for_italics(line)
