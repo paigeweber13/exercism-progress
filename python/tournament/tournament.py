@@ -1,3 +1,5 @@
+from operator import itemgetter
+
 def build_results_array(tournament_results):
     """
     builds results. Returns an object of the following form:
@@ -20,6 +22,9 @@ def build_results_array(tournament_results):
         }
     }
     """
+    if tournament_results == '':
+        return {}
+    
     team_stats_dict = {}
     array_of_input = []
     lines = tournament_results.split('\n')
@@ -60,14 +65,13 @@ def build_table(team_stats):
     # sorted(team_stats, key=lambda team: team_stats[team]['points'], reverse=True)
     table = '{0:<31s}| {1:>2s} | {2:>2s} | {3:>2s} | {4:>2s} | {5:>2s}' \
             .format('Team', 'MP', 'W', 'D', 'L', 'P')
-    for team_name in team_stats:
+    stats_array = convert_stats_dict_to_sorted_array(team_stats)
+    for team in stats_array:
         table += '\n'
         table += '{0:<31}| {1:>2} | {2:>2} | {3:>2} | {4:>2} | {5:>2}' \
-                .format(team_name, team_stats[team_name]['matches_played'],
-                        team_stats[team_name]['wins'],
-                        team_stats[team_name]['draws'],
-                        team_stats[team_name]['losses'],
-                        team_stats[team_name]['points'])
+                .format(team['team_name'], team['matches_played'],
+                        team['wins'], team['draws'], team['losses'],
+                        team['points'])
     return table
 
 def convert_stats_dict_to_sorted_array(team_stats):
@@ -76,7 +80,26 @@ def convert_stats_dict_to_sorted_array(team_stats):
     dictionaries, but you can't sort a dictionary. Converting to a list later
     is faster and allows for sorting
     """
-    pass
+    stats_array = []
+    for team in team_stats:
+        stats_array.append({
+            'team_name': team,
+            'matches_played': team_stats[team]['matches_played'],
+            'wins': team_stats[team]['wins'],
+            'draws': team_stats[team]['draws'],
+            'losses': team_stats[team]['losses'],
+            'points': team_stats[team]['points'],
+        })
+
+    # we want list sorted first by points and then by team_name.
+    # Counter-intuitively, this means we have to first sort by team_name to
+    # make sure list is alphabetized and then sort by points.
+    stats_array.sort(key=itemgetter('team_name'))
+    stats_array.sort(key=itemgetter('points'), reverse=True)
+    # below lines also work, but need a python function call
+    # stats_array.sort(key=lambda k: k['team_name'])
+    # stats_array.sort(key=lambda k: k['points'], reverse=True)
+    return stats_array
 
 def tally(tournament_results):
     stats = build_results_array(tournament_results)
