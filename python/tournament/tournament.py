@@ -1,3 +1,12 @@
+"""
+takes text of format 'Allegoric Alaskans;Blithering Badgers;win' and converts
+it to a human-readable table that looks like this:
+
+Team                           | MP |  W |  D |  L |  P
+Allegoric Alaskans             |  1 |  1 |  0 |  0 |  3
+Blithering Badgers             |  1 |  0 |  0 |  1 |  0
+"""
+
 from operator import itemgetter
 
 def build_results_dict(tournament_results):
@@ -53,7 +62,7 @@ def build_results_dict(tournament_results):
             team_stats_dict[result[1]]['draws'] += 1
             team_stats_dict[result[0]]['points'] += 1
             team_stats_dict[result[1]]['points'] += 1
- 
+
         team_stats_dict[result[0]]['matches_played'] += 1
         team_stats_dict[result[1]]['matches_played'] += 1
     return team_stats_dict
