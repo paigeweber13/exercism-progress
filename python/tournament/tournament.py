@@ -58,22 +58,6 @@ def build_results_dict(tournament_results):
         team_stats_dict[result[1]]['matches_played'] += 1
     return team_stats_dict
 
-def build_table(team_stats):
-    """
-    returns string representing human-readable table of results using the
-    object returned from convert_stats_dict_to_sorted_array
-    """
-    table = '{0:<31s}| {1:>2s} | {2:>2s} | {3:>2s} | {4:>2s} | {5:>2s}' \
-            .format('Team', 'MP', 'W', 'D', 'L', 'P')
-    stats_array = convert_stats_dict_to_sorted_array(team_stats)
-    for team in stats_array:
-        table += '\n'
-        table += '{0:<31}| {1:>2} | {2:>2} | {3:>2} | {4:>2} | {5:>2}' \
-                .format(team['team_name'], team['matches_played'],
-                        team['wins'], team['draws'], team['losses'],
-                        team['points'])
-    return table
-
 def convert_stats_dict_to_sorted_array(team_stats):
     """
     justification: it's easy to build this data using a dictionary of
@@ -112,6 +96,22 @@ def convert_stats_dict_to_sorted_array(team_stats):
     # stats_array.sort(key=lambda k: k['team_name'])
     # stats_array.sort(key=lambda k: k['points'], reverse=True)
     return stats_array
+
+def build_table(team_stats):
+    """
+    returns string representing human-readable table of results using the
+    object returned from convert_stats_dict_to_sorted_array
+    """
+    table = '{0:<31s}| {1:>2s} | {2:>2s} | {3:>2s} | {4:>2s} | {5:>2s}' \
+            .format('Team', 'MP', 'W', 'D', 'L', 'P')
+    stats_array = convert_stats_dict_to_sorted_array(team_stats)
+    for team in stats_array:
+        table += '\n'
+        table += '{0:<31}| {1:>2} | {2:>2} | {3:>2} | {4:>2} | {5:>2}' \
+                .format(team['team_name'], team['matches_played'],
+                        team['wins'], team['draws'], team['losses'],
+                        team['points'])
+    return table
 
 def tally(tournament_results):
     """
