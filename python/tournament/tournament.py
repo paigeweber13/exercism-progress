@@ -70,6 +70,14 @@ def build_table(team_stats):
                         team_stats[team_name]['points'])
     return table
 
+def convert_stats_dict_to_sorted_array(team_stats):
+    """
+    justification: it's easy to build this data using a dictionary of
+    dictionaries, but you can't sort a dictionary. Converting to a list later
+    is faster and allows for sorting
+    """
+    pass
+
 def tally(tournament_results):
     stats = build_results_array(tournament_results)
     return build_table(stats)
