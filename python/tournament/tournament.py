@@ -1,30 +1,30 @@
 from operator import itemgetter
 
-def build_results_array(tournament_results):
+def build_results_dict(tournament_results):
     """
     builds results. Returns an object of the following form:
     {
-        team1: {
+        team-1: {
             matches_played: int,
             wins: int,
-            draws: int, 
+            draws: int,
             losses: int,
             points: int,
         }
-        team2: {
+        team-2: {
             ...
         }
 
         ...
 
-        teamn: {
+        team-n: {
             ...
         }
     }
     """
     if tournament_results == '':
         return {}
-    
+
     team_stats_dict = {}
     array_of_input = []
     lines = tournament_results.split('\n')
@@ -39,7 +39,7 @@ def build_results_array(tournament_results):
                                          'draws': 0,
                                          'losses': 0,
                                          'points': 0,}
-                                         
+
         if result[2] == "win":
             team_stats_dict[result[0]]['wins'] += 1
             team_stats_dict[result[0]]['points'] += 3
@@ -53,16 +53,16 @@ def build_results_array(tournament_results):
             team_stats_dict[result[1]]['draws'] += 1
             team_stats_dict[result[0]]['points'] += 1
             team_stats_dict[result[1]]['points'] += 1
-        
+ 
         team_stats_dict[result[0]]['matches_played'] += 1
         team_stats_dict[result[1]]['matches_played'] += 1
     return team_stats_dict
 
 def build_table(team_stats):
     """
-    returns string representing human-readable table of results using the results object from build_results_dict
+    returns string representing human-readable table of results using the
+    object returned from convert_stats_dict_to_sorted_array
     """
-    # sorted(team_stats, key=lambda team: team_stats[team]['points'], reverse=True)
     table = '{0:<31s}| {1:>2s} | {2:>2s} | {3:>2s} | {4:>2s} | {5:>2s}' \
             .format('Team', 'MP', 'W', 'D', 'L', 'P')
     stats_array = convert_stats_dict_to_sorted_array(team_stats)
@@ -78,7 +78,19 @@ def convert_stats_dict_to_sorted_array(team_stats):
     """
     justification: it's easy to build this data using a dictionary of
     dictionaries, but you can't sort a dictionary. Converting to a list later
-    is faster and allows for sorting
+    is significantly easier than trying to have an array of objects form the
+    beginning
+
+    takes a dict of team stats dicts, as returned by build_results_dict.
+    returns an array of objects of the following format:
+    {
+        team_name: String,
+        matches_played: int,
+        wins: int,
+        draws: int,
+        losses: int,
+        points: int,
+    }
     """
     stats_array = []
     for team in team_stats:
@@ -102,5 +114,8 @@ def convert_stats_dict_to_sorted_array(team_stats):
     return stats_array
 
 def tally(tournament_results):
-    stats = build_results_array(tournament_results)
+    """
+    wrapper function to do all the work
+    """
+    stats = build_results_dict(tournament_results)
     return build_table(stats)
