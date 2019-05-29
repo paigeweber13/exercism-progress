@@ -11,6 +11,9 @@ def total(basket):
 
     total_cost = 0
 
+    # TODO: edge case where you buy a set of books twice. Each set gets a 
+    # discount
+
     num_from_set = len(different_books)
     total_cost += num_from_set * PRICE_PER_BOOK 
     discount = 0
