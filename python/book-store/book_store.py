@@ -19,13 +19,14 @@ def total(basket):
 
     # Options:
     #  * keep list of "candidate" sets that have a slot, add it to the smallest
-    #    one.
+    #    one. DOESN'T WORK. The largest number of groups is not always the
+    #    cheapest
     #  * find number of repeated books.... those must not be in the same set.
     #    Highest number of repeated books will give the minimum number of sets
     #    we need... true but unhelpful
-
-    # JUST GOING TO MAKE CANDIDATE LIST FOR NOW. I'll see if there's a more
-    # elegant solution after submitting this one
+    # ???
+    #  * maybe: parse list from front, parse list from back, return smaller
+    #    cost?
 
     for book_set in book_sets:
         num_from_set = len(book_set)
