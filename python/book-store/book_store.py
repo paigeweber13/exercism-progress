@@ -14,11 +14,12 @@ def total(basket):
 
     total_cost = 0
 
-    # DONE: edge case where you buy a set of books twice. Each set gets a 
-    # discount
-    
     # IT's NOT THAT SIMPLE. YOU HAVE TO FIND THE MAXIMUM DISCOUNT YEESH
-    # add books to smallest set?
+    # add books to smallest set? 
+
+    # Options:
+    #  * keep list of "candidate" sets that have a slot, add it to the smallest
+    #    one.
 
     for book_set in book_sets:
         num_from_set = len(book_set)
