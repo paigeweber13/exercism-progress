@@ -20,6 +20,12 @@ def total(basket):
     # Options:
     #  * keep list of "candidate" sets that have a slot, add it to the smallest
     #    one.
+    #  * find number of repeated books.... those must not be in the same set.
+    #    Highest number of repeated books will give the minimum number of sets
+    #    we need... true but unhelpful
+
+    # JUST GOING TO MAKE CANDIDATE LIST FOR NOW. I'll see if there's a more
+    # elegant solution after submitting this one
 
     for book_set in book_sets:
         num_from_set = len(book_set)
