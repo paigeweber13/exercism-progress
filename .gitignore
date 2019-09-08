@@ -1,3 +1,5 @@
 *cache*
 *vscode*
 .stack-work
+.exercism
+*.swp
