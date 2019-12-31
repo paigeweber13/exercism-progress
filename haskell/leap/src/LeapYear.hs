@@ -4,6 +4,8 @@ module LeapYear (isLeapYear) where
 -- https://exercism.io/tracks/haskell/exercises/leap/solutions/eed4277a70a24fb6af10bd5335053dfe
 isLeapYear :: Integer -> Bool
 isLeapYear year
+  -- the below stuff with the pipe symobls is what is called a 'guarded
+  -- conditional'
   | isDivisibleBy 400 = True
   | isDivisibleBy 100 = False
   | isDivisibleBy 4 = True
